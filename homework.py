@@ -30,7 +30,6 @@ HOMEWORK_VERDICTS = {
 
 def check_tokens():
     """Проверка доступности всех токенов"""
-
     if (PRACTICUM_TOKEN is None or TELEGRAM_TOKEN is None
        or TELEGRAM_CHAT_ID is None):
         logging.critical('Переменная окружения не обнаружена')
@@ -39,7 +38,6 @@ def check_tokens():
 
 def send_message(bot, message):
     """Отправка сообщений"""
-
     try:
         logging.debug('Успешная отправка сообщения')
         return bot.send_message(TELEGRAM_CHAT_ID, message)
@@ -49,7 +47,6 @@ def send_message(bot, message):
 
 def get_api_answer(timestamp):
     """Получение ответа API"""
-
     params = {'from_date': timestamp}
 
     try:
@@ -68,7 +65,6 @@ def get_api_answer(timestamp):
 
 def check_response(response):
     """Проверка ответа"""
-
     if not isinstance(response, dict):
         raise TypeError('Ожидался словарь в качестве ответа')
 
@@ -85,7 +81,6 @@ def check_response(response):
 
 def parse_status(homework):
     """Уведомление о статусе домашней работы"""
-
     if not isinstance(homework, dict):
         raise TypeError('Ожидался словарь в качестве ответа')
 
@@ -104,7 +99,6 @@ def parse_status(homework):
 
 def main():
     """Основная логика работы бота."""
-
     check_tokens()
 
     bot = telegram.Bot(token=TELEGRAM_TOKEN)
