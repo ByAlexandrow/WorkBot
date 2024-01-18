@@ -38,18 +38,19 @@ def check_tokens():
 
 def send_message(bot, message):
     """Отправка сообщений."""
+    logging.debug('Сообщение еще не отправлено')
     try:
-        if bot.send_message(TELEGRAM_CHAT_ID, message) is not None:
-            logging.debug('Успешная отправка сообщения')
-        else:
-            logging.debug('Сообщение еще не отправлено')
+        logging.debug('Успешная отправка сообщения')
+        bot.send_message(TELEGRAM_CHAT_ID, message)
     except Exception as error:
         logging.error(f'Ошибка при отправке сообщения: {error}')
 
 
 def get_api_answer(timestamp):
     """Получение ответа API."""
-    params = {'from_date': timestamp}
+    params = {'from_date': timestamp,
+              'headers': HEADERS,
+              'endpoint': ENDPOINT}
 
     try:
         response = requests.get(ENDPOINT, HEADERS, params)
@@ -123,7 +124,6 @@ def main():
                 except Exception as error:
                     message = f'Ошибка при отправке сообщения: {error}'
                     logging.error(message)
-            time.sleep(RETRY_PERIOD)
 
         except Exception as error:
             message = f'Сбой в работе программы: {error}'
